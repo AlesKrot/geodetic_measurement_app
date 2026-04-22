@@ -13,7 +13,7 @@ function Get-RepoRoot {
         return (Resolve-Path -LiteralPath $ProvidedRepoPath).Path
     }
 
-    $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+    $scriptDir = $PSScriptRoot
     $root = Resolve-Path -LiteralPath (Join-Path $scriptDir "..\..")
     return $root.Path
 }

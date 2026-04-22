@@ -103,7 +103,7 @@ class RabCodePreview(QWidget):
             y2 = strip_rect.top() + int((y_bottom_mm - self._start_mm) * scale)
             h = max(1, y2 - y1)
             
-            color = QColor("#000000") if stripe.typ == "R" else QColor("#2f2f2f")
+            color = QColor("#000000")
             painter.fillRect(strip_rect.left() + 1, y1, strip_rect.width() - 2, h, color)
 
         # 2. Малюем шкалу (вось яна была праблемай)
