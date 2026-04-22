@@ -1,0 +1,11 @@
+PySide6>=6.7
+pandas>=2.2
+numpy>=2.0
+bleak>=0.22
+pyserial>=3.5
+reportlab>=4.2
+pypdf>=5.1
+pytest>=8.0
+pytest-asyncio>=0.23
+pytest-qt>=4.4
+ruff>=0.6
