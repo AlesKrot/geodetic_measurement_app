@@ -32,14 +32,17 @@ def atmospheric_correction_from_wet_dry(
     humidity_percent = 100.0 * vapor_pressure / es_dry if es_dry > 0.0 else 0.0
 
     wavelength_um = max(0.2, wavelength_nm / 1000.0)
-    reference_um = 0.633
-    dispersion_factor = 1.0 + 0.005 * ((1.0 / (wavelength_um**2)) - (1.0 / (reference_um**2)))
+    sigma2 = (1.0 / wavelength_um) ** 2
 
-    ppm = (
-        (pressure - 1013.25)
-        - (2.0 * (dry - 20.0))
-        + (humidity_percent - 50.0)
-    ) * dispersion_factor
+    n_g0_ppm = 287.6155 + (4.8866 / (130.0 - sigma2)) + (0.0680 / (38.9 - sigma2))
+
+    standard_temperature_c = 15.0
+    standard_pressure_hpa = 1013.25
+
+    n_gs_ppm = n_g0_ppm * (273.15 / (273.15 + standard_temperature_c))
+    n_gr_ppm = n_g0_ppm * (pressure / standard_pressure_hpa) * (273.15 / (273.15 + dry))
+
+    ppm = n_gs_ppm - n_gr_ppm
 
     correction_m = distance_m * ppm * 1e-6
     correction_per_km_m = 1000.0 * ppm * 1e-6
